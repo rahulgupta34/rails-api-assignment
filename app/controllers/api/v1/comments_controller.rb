@@ -40,6 +40,13 @@ class Api::V1::CommentsController < ApplicationController
     @api_v1_comment.destroy
   end
 
+  def search_comment
+    if params[:search].present?
+      @comment = Api::V1::Comment.where("comment LIKE '%#{params[:search]}%'")
+      render json: @comment, status: 200
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_comment

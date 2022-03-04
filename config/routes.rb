@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     end
   end
   
-  
+  get "/search", to: "api/v1/articles#search_article"
+  get "/search/comment", to: "api/v1/comments#search_comment"
 end

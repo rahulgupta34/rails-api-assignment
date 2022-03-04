@@ -3,7 +3,7 @@ class Api::V1::ArticlesController < ApplicationController
 
   # GET /api/v1/articles
   def index
-    @api_v1_articles = Api::V1::Article.all
+    @api_v1_articles = Api::V1::Article.all.limit(params[:limit]).offset(params[:offset])
 
     render json: @api_v1_articles
   end
@@ -37,6 +37,15 @@ class Api::V1::ArticlesController < ApplicationController
   # DELETE /api/v1/articles/1
   def destroy
     @api_v1_article.destroy
+  end
+
+  def search_article
+     if params[:search].present?
+        @search = Api::V1::Article.where("title LIKE '%#{params[:search]}%'")
+        if @search
+          render json: @search, status: 200
+        end
+     end
   end
 
   private
